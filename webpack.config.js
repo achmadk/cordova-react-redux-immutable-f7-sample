@@ -2,7 +2,7 @@ const webpack = require('webpack'); // Requiring the webpack lib
 
 module.exports = {
   entry: [
-    'webpack-dev-server/client?http://localhost:8000', // Setting the URL for the hot reload
+    'webpack-dev-server/client?http://localhost:8080/', // Setting the URL for the hot reload
     'webpack/hot/only-dev-server', // Reload only the dev server
     './src/index.jsx'
     // './src/modules/main.js'
@@ -12,6 +12,9 @@ module.exports = {
       test: /\.jsx?$/,
       exclude: /node_modules/,
       loader: 'react-hot!babel' // Include the react-hot loader
+    }, {
+      test: /\.less$/,
+      loader: 'style!css!less' // We add the css loader
     }, {
       test: /\.css$/,
       loader: 'style!css' // We add the css loader
@@ -23,6 +26,9 @@ module.exports = {
     }, {
       test:  /\.ttf$|\.eot$|\.svg$/,
       loader: 'file'
+    }, {
+      test: /\.(woff|woff2)$/,
+      loader: 'url-loader?limit=10000&mimetype=application/font-woff'
     }]
   },
   resolve: {
@@ -40,8 +46,10 @@ module.exports = {
   plugins: [
     new webpack.HotModuleReplacementPlugin(), // Wire in the hot loading plugin
     // new webpack.optimize.UglifyJsPlugin({
-    //   compress: { warnings: false },
-    //   output: { comments: false }
+    //   mangle: false,
+    //   sourcemap: false,
+    //   // compress: { warnings: false },
+    //   // output: { comments: false }
     // })
   ]
 };
